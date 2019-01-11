@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="SuperGroup:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SuperGroup_jar</output-path>
+    <root id="root">
+      <element id="archive" name="SuperGroup.jar">
+        <element id="module-output" name="SuperGroup" />
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,5 @@
+name: SuperGroup
+main: com.qq44920040.Minecarft.SuperGroup.SGmain
+version: 1.0
+commands:
+  SG:
