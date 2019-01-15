@@ -18,8 +18,8 @@ class SuperGroupPlayerJoinListener {
             if (PlayerHavePostion(playeruuid,GroupId)){
                 ArrayList<String> PlayerlogList = DaoTool.GetGroupJoinLogMsg(GroupId);
                 PlayerlogList.forEach((String uuid)->{
-                    String playerName = Bukkit.getPlayer(UUID.fromString(uuid)).getDisplayName();
-                    Bukkit.getServer().getConsoleSender().sendMessage("/tellraw "+playerName+" [\"\",{\"text\":\"申请玩家名:\",\"color\":\"green\",\"bold\":true},{\"text\":\" ["+playerName+"]\",\"color\":\"gold\",\"bold\":true,\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"玩家UUID:"+uuid+"\",\"color\":\"red\"}]}}},{\"text\":\"    [同意]\",\"color\":\"yellow\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/sg accept "+uuid+"\"}},{\"text\":\"     [拒绝]\",\"color\":\"gray\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/sg reject "+uuid+"\"}}]");
+                    String playerName =  Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(),"tellraw "+player.getDisplayName()+" [\"\",{\"text\":\"申请玩家名:\",\"color\":\"green\",\"bold\":true},{\"text\":\" ["+playerName+"]\",\"color\":\"gold\",\"bold\":true,\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"玩家UUID:"+uuid+"\",\"color\":\"red\"}]}}},{\"text\":\"    [同意]\",\"color\":\"yellow\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/sg accept "+uuid+"\"}},{\"text\":\"     [拒绝]\",\"color\":\"gray\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/sg reject "+uuid+"\"}}]");
                 });
             }
         }

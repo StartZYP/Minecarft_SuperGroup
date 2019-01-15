@@ -3,15 +3,16 @@ package com.qq44920040.Minecarft.SuperGroup;
 import com.qq44920040.Minecarft.SuperGroup.Commands.SGCommand;
 import com.qq44920040.Minecarft.SuperGroup.DUtil.DaoTool;
 import com.qq44920040.Minecarft.SuperGroup.Listener.SuperGroupMainListener;
+import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupMenu;
 import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupView;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.UUID;
 
 
@@ -31,7 +32,12 @@ public class SGmain extends JavaPlugin {
                     if (args[0].equalsIgnoreCase("list")){
                         SuperGroupView.OpenInventorySGList(player,0);
                     }else if (args[0].equalsIgnoreCase("sg")){
-                        //打开
+                        int GroupId =DaoTool.GetPlayerHaveGroup(player.getUniqueId());
+                        if (GroupId!=-1){
+                            SuperGroupMenu.PlayerOpenGroupMenu(player,GroupId);
+                        }else {
+                            player.sendMessage("§c§l您还没有工会无法打开工会菜单");
+                        }
                     }
                 }else if (args.length == 2) {
                     if (args[0].equalsIgnoreCase("Create")){
@@ -51,14 +57,26 @@ public class SGmain extends JavaPlugin {
                     }else if (args[0].equalsIgnoreCase("accept")){
                         UUID PlayerUUID = player.getUniqueId();
                         UUID ADDPlayerUUId = UUID.fromString(args[1]);
-                        int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
-                        DaoTool.AddGroupPlayer(Groupid,ADDPlayerUUId,4);
-                        player.sendMessage("§e§l您同意玩家:"+Bukkit.getPlayer(ADDPlayerUUId).getDisplayName()+"加入公会.");
+                        int addPlayerGroupid = DaoTool.GetPlayerHaveGroup(ADDPlayerUUId);
+                        if (addPlayerGroupid!=-1){
+                            player.sendMessage("§c§l此玩家已经有工会了");
+                        }else if(DaoTool.GetHumanNum(addPlayerGroupid)>=DaoTool.GetSuperGroup(addPlayerGroupid).getMaxHuManNumber()){
+                            player.sendMessage("§c§l公会满人了");
+                        }else {
+                            int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
+                            DaoTool.AddGroupPlayer(Groupid,ADDPlayerUUId,4);
+                            DaoTool.GroupLogRemovePlayer(-1,ADDPlayerUUId);
+                            player.sendMessage("§e§l您同意玩家:"+Bukkit.getOfflinePlayer(ADDPlayerUUId).getName()+"加入公会.");
+                        }
                     }else if (args[0].equalsIgnoreCase("reject")){
                         UUID PlayerUUID = player.getUniqueId();
                         UUID ADDPlayerUUId = UUID.fromString(args[1]);
-                        int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
-                        DaoTool.GroupLogRemovePlayer(Groupid,ADDPlayerUUId);
+                        if (DaoTool.GetPlayerHaveGroup(ADDPlayerUUId)!=-1){
+                            player.sendMessage("§c§l此玩家已经有工会了");
+                        }else {
+                            int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
+                            DaoTool.GroupLogRemovePlayer(Groupid,ADDPlayerUUId);
+                        }
                     }
                 }else {
                     sender.sendMessage(GroupConfig.SuperGroupInfo);
@@ -101,10 +119,22 @@ public class SGmain extends JavaPlugin {
             GroupConfig.GroupLevel.put(i,new String[]{Tempcontribution,TempDay,Number});
         }
         GroupConfig.Vice_President = getConfig().getInt("SuperGroup.Vice_President");
+        System.out.println(GroupConfig.Vice_President);
         GroupConfig.Elite = getConfig().getInt("SuperGroup.Elite");
+        System.out.println( GroupConfig.Elite);
         GroupConfig.EnterGroupTimeSetPosition = getConfig().getInt("SuperGroup.EnterGroupTimeSetPosition");
         GroupConfig.GroupCardLore = getConfig().getString("SuperGroup.GroupCardLore");
         GroupConfig.Donation =getConfig().getString("SuperGroup.Donation").split("-");
+        GroupConfig.SuperGroupInfo = getConfig().getStringList("SuperGroup.Lang.SuperGroupInfo").toArray(new String[0]);
+        System.out.println(Arrays.toString(GroupConfig.SuperGroupInfo));
+        GroupConfig.SuperGroupListTitle = getConfig().getString("SuperGroup.Lang.SuperGroupListTitle");
+        GroupConfig.SGlistItem = getConfig().getStringList("SuperGroup.Lang.SGlistItem").toArray(new String[0]);
+        GroupConfig.PageUpButtonDisPlay = getConfig().getString("SuperGroup.Lang.PageUpButtonDisPlay");
+        GroupConfig.PageDownButtonDisPlay = getConfig().getString("SuperGroup.Lang.PageDownButtonDisPlay");
+        GroupConfig.PlayerListViewTitle = getConfig().getString("SuperGroup.Lang.PlayerListViewTitle");
+        GroupConfig.GroupMenuTitle = getConfig().getString("SuperGroup.Lang.GroupMenuTitle");
+        GroupConfig.ContributionTitle = getConfig().getString("SuperGroup.Lang.ContributionTitle");
+
         if (GroupConfig.GroupLevel.size()>=1&&GroupConfig.Vice_President!=0&&GroupConfig.Elite!=0&&GroupConfig.EnterGroupTimeSetPosition!=0&&!GroupConfig.GroupCardLore.equalsIgnoreCase("")&&GroupConfig.Donation.length==3){
             return true;
         }else{

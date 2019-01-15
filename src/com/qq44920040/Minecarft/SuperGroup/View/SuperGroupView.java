@@ -2,7 +2,6 @@ package com.qq44920040.Minecarft.SuperGroup.View;
 
 import com.qq44920040.Minecarft.SuperGroup.DUtil.DaoTool;
 import com.qq44920040.Minecarft.SuperGroup.Entity.GroupEntity;
-import com.qq44920040.Minecarft.SuperGroup.Entity.PlayerEntity;
 import com.qq44920040.Minecarft.SuperGroup.GroupConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,7 +13,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
 
 public class SuperGroupView {
@@ -48,7 +46,7 @@ public class SuperGroupView {
                 ItemStack SuperGroupItem = new ItemStack(Material.SIGN,1);
                 ItemMeta itemMeta = SuperGroupItem.getItemMeta();
                 itemMeta.setDisplayName(GroupConfig.SGlistItem[0].replace("[SuperGroupName]",Group.getGroupName()));
-                itemMeta.setLore(Arrays.asList(GroupConfig.SGlistItem[1].replace("[SuperGroupLevel]",String.valueOf(Group.GetGroupLevel())),GroupConfig.SGlistItem[2].replace("[SuperGroupMaxNum]",String.valueOf(Group.getMaxHuManNumber())).replace("[SuperGroupNewNum]",String.valueOf(DaoTool.GetHumanNum(Group.getGroupID()))),GroupConfig.SGlistItem[3].replace("[oderName]",Bukkit.getPlayer(DaoTool.GetGroupOder(Group.getGroupID())).getDisplayName()),GroupConfig.SGlistItem[4].replace("[GroupKeyId]",String.valueOf(Group.getGroupID()))));
+                itemMeta.setLore(Arrays.asList(GroupConfig.SGlistItem[1].replace("[SuperGroupLevel]",String.valueOf(Group.GetGroupLevel())),GroupConfig.SGlistItem[2].replace("[SuperGroupHumanNum]",DaoTool.GetHumanNum(Group.getGroupID())+"/"+Group.getMaxHuManNumber()),GroupConfig.SGlistItem[3].replace("[oderName]",Bukkit.getOfflinePlayer(DaoTool.GetGroupOder(Group.getGroupID())).getName()),GroupConfig.SGlistItem[4].replace("[GroupKeyId]",String.valueOf(Group.getGroupID()))));
                 SuperGroupItem.setItemMeta(itemMeta);
                 inventorySGList.setItem(i,SuperGroupItem);
                 i++;

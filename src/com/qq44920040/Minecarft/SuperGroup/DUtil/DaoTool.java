@@ -2,7 +2,6 @@ package com.qq44920040.Minecarft.SuperGroup.DUtil;
 
 import com.qq44920040.Minecarft.SuperGroup.Entity.GroupEntity;
 import com.qq44920040.Minecarft.SuperGroup.Entity.PlayerEntity;
-import org.bukkit.entity.Player;
 
 import java.sql.*;
 import java.util.*;
@@ -16,11 +15,11 @@ public class DaoTool {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:"+DatabasePath+".db");
             statement = connection.createStatement();
-            String SuperGroupTable = "CREATE TABLE IF NOT EXISTS 'SuperGroup'( SuperGroupId INTEGER PRIMARY KEY, SuperGroupName VARCHAR(200), GroupContributionPoint INTEGER, UsedGroupContributionPoist integer, SuperGroupCreateTime DATETIME )";
+            String SuperGroupTable = "CREATE TABLE IF NOT EXISTS 'SuperGroup'( SuperGroupId INTEGER PRIMARY KEY, SuperGroupName VARCHAR(100), GroupContributionPoint INTEGER, UsedGroupContributionPoist integer, SuperGroupCreateTime DATETIME )";
             statement.executeUpdate(SuperGroupTable);
-            String PlayerTable = "CREATE TABLE IF NOT EXISTS 'SuperGroupPlayer'( SuperGroupId INTEGER, PlayerUUid VARCHAR(100), HaveContributionPoint INTEGER, PostionType integer, GroupJoinTime DATETIME )";
+            String PlayerTable = "CREATE TABLE IF NOT EXISTS 'SuperGroupPlayer'( SuperGroupId INTEGER, PlayerUUid VARCHAR(200), HaveContributionPoint INTEGER, PostionType integer, GroupJoinTime DATETIME )";
             statement.executeUpdate(PlayerTable);
-            String GroupLog = "CREATE TABLE IF NOT EXISTS 'SuperGroupLog'( SuperGroupId INTEGER, PlayerUUid VARCHAR(100),SuperGroupCreateTime DATETIME)";
+            String GroupLog = "CREATE TABLE IF NOT EXISTS 'SuperGroupLog'( SuperGroupId INTEGER, PlayerUUid VARCHAR(200),SuperGroupCreateTime DATETIME)";
             statement.executeUpdate(GroupLog);
             statement.close();
         } catch ( Exception e ) {
@@ -34,7 +33,7 @@ public class DaoTool {
             try {
                 connection.setAutoCommit(false);
                 statement = connection.createStatement();
-                String sql = "DELETE FROM SuperGroupLog where PlayerUUid="+ playeruuid;
+                String sql = "DELETE FROM SuperGroupLog where PlayerUUid='"+ playeruuid+"'";
                 statement.executeUpdate(sql);
                 connection.commit();
                 statement.close();
@@ -45,7 +44,7 @@ public class DaoTool {
             try {
                 connection.setAutoCommit(false);
                 statement = connection.createStatement();
-                String sql = "DELETE FROM SuperGroupLog where PlayerUUid="+ playeruuid+" and SuperGroupId="+SuperGroupId;
+                String sql = "DELETE FROM SuperGroupLog where PlayerUUid='"+ playeruuid+"' and SuperGroupId="+SuperGroupId;
                 statement.executeUpdate(sql);
                 connection.commit();
                 statement.close();
@@ -53,6 +52,30 @@ public class DaoTool {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public static GroupEntity GetSuperGroup(int SuperGroupid){
+        GroupEntity SuperGroup=null;
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String GetSuperGroupSql = "select * from SuperGroup where SuperGroupId="+SuperGroupid;
+            ResultSet rs = statement.executeQuery(GetSuperGroupSql);
+            while (rs.next()){
+                int GroupID = rs.getInt("SuperGroupId");
+                String SuperGroupName = rs.getString("SuperGroupName");
+                int GroupContributionPoint = rs.getInt("GroupContributionPoint");
+                int UsedGroupContributionPoist = rs.getInt("UsedGroupContributionPoist");
+                Date SuperGroupCreateTime = rs.getDate("SuperGroupCreateTime");
+                SuperGroup = new GroupEntity(GroupID,SuperGroupName,GroupContributionPoint,UsedGroupContributionPoist,SuperGroupCreateTime);
+            }
+            rs.close();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return SuperGroup;
     }
 
 
@@ -87,7 +110,7 @@ public class DaoTool {
             statement = connection.createStatement();
             String sql = "select * from SuperGroupPlayer where SuperGroupId="+SuperGroupId;
             ResultSet rs =statement.executeQuery(sql);
-            if(rs.next()){
+            while (rs.next()){
                 String PlayerUUid = rs.getString("PlayerUUid");
                 int HaveContributionPoint = rs.getInt("HaveContributionPoint");
                 int PostionType = rs.getInt("PostionType");
@@ -101,19 +124,38 @@ public class DaoTool {
         return PlayerEntityList;
     }
 
-
+    public static PlayerEntity GetPlayerEntity(UUID PlayerUUID){
+        PlayerEntity PlayerEntity=null;
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql = "select * from SuperGroupPlayer where PlayerUUid='"+PlayerUUID+"'";
+            ResultSet rs =statement.executeQuery(sql);
+            while (rs.next()){
+                int HaveContributionPoint = rs.getInt("HaveContributionPoint");
+                int PostionType = rs.getInt("PostionType");
+                Date EnterTime =rs.getDate("GroupJoinTime");
+                PlayerEntity = new PlayerEntity(HaveContributionPoint,PostionType,EnterTime);
+            }
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return PlayerEntity;
+    }
 
     public static UUID GetGroupOder(int SuperGroupId){
         String PlayerUUid="1";
         try {
             connection.setAutoCommit(false);
             statement = connection.createStatement();
-            String sql = "select * from SuperGroupPlayer where SuperGroupId="+SuperGroupId+"and PostionType=1";
+            String sql = "select PlayerUUid from SuperGroupPlayer where SuperGroupId="+SuperGroupId+" and PostionType=1";
             ResultSet rs =statement.executeQuery(sql);
-            if(rs.next()){
+            while (rs.next()){
                 PlayerUUid = rs.getString("PlayerUUid");
             }
-            connection.commit();
+            rs.close();
             statement.close();
         }catch (SQLException e){
             e.printStackTrace();
@@ -129,9 +171,8 @@ public class DaoTool {
             String sql = "select * from SuperGroupPlayer where PlayerUUid='"+UUid+"'";
             ResultSet rs =statement.executeQuery(sql);
             if (rs.next()){
-                rs.getInt("SuperGroupId");
+                haveGroup= rs.getInt("SuperGroupId");
             }
-            connection.commit();
             rs.close();
             statement.close();
         }catch (SQLException e){
@@ -163,7 +204,7 @@ public class DaoTool {
         try {
             connection.setAutoCommit(false);
             statement = connection.createStatement();
-            String GetSuperGroupSql = "select * from SuperGroupLog where SuperGroupId="+SuperGroupId+"and PlayerUUid="+playeruuid;
+            String GetSuperGroupSql = "select * from SuperGroupLog where SuperGroupId="+SuperGroupId+" and PlayerUUid='"+playeruuid+"'";
             ResultSet rs = statement.executeQuery(GetSuperGroupSql);
             while (rs.next()){
                 tempnum++;

@@ -12,16 +12,19 @@ import java.util.List;
 
 
 class SuperGroupListListener{
+
+
     static void OpenSuperGroupListListener(InventoryClickEvent event){
         Inventory inv = event.getInventory();
         if (inv.getTitle().equalsIgnoreCase(GroupConfig.SuperGroupListTitle)){
+            event.setCancelled(true);
             Player p = (Player) event.getWhoClicked();
             int ClickSlot = event.getRawSlot();
             if (ClickSlot>=9&&ClickSlot<=35){
                 ItemStack Button = inv.getItem(ClickSlot);
                 if (Button!=null){
                     List<String> itemlist = Button.getItemMeta().getLore();
-                    String lore = itemlist.get(4);
+                    String lore = itemlist.get(3);
                     String GroupKeyId = lore.replace(GroupConfig.SGlistItem[4].replace("[GroupKeyId]",""),"");
                     if (DaoTool.GetPlayerHaveGroup(p.getUniqueId())!=-1){
                         p.sendMessage("§c§l您已经有工会了.");
@@ -43,14 +46,12 @@ class SuperGroupListListener{
                     }else {
                         Page = Integer.parseInt(Button.getItemMeta().getDisplayName().replace(GroupConfig.PageUpButtonDisPlay,""));
                     }
-                    event.setCancelled(true);
                     SuperGroupView.UpdateInventorySGList(p,Page);
                 }
             }else {
-                event.setCancelled(true);
                 p.sendMessage(GroupConfig.SuperGroupInfo);
-                p.closeInventory();
             }
+            p.closeInventory();
         }
     }
 }

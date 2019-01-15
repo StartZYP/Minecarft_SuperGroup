@@ -8,11 +8,19 @@ public class PlayerEntity {
         this.HaveContributionPoint = HaveContributionPoint;
         this.PostionType = PostionType;
     }
-    int GroupId;
+    public PlayerEntity(int HaveContributionPoint,int PostionType,Date EnterTime){
+        this.EnterTime = EnterTime;
+        this.HaveContributionPoint = HaveContributionPoint;
+        this.PostionType = PostionType;
+    }
     private String PlayerUUid;
     private int HaveContributionPoint;
     private int PostionType;
     Date EnterTime;
+
+    public Date getEnterTime() {
+        return EnterTime;
+    }
     public String getPlayerUUid() {
         return PlayerUUid;
     }

@@ -41,3 +41,21 @@ SuperGroup:
   EnterGroupTimeSetPosition: 2
   GroupCardLore: CanCreateGroup
   Donation: 10000000-5000000-10000000
+  Lang:
+    SuperGroupInfo:
+      - §4=======SuperGroup=======
+      - §41.[任何人]查看服务器公会列表/SG list
+      - §42.[任何人]查看自己公会/SG SG
+      - §43.[任何人]创建公会/SG create 公会名
+    SuperGroupListTitle: §d公会列表
+    SGlistItem:
+      - 公会名:[SuperGroupName]
+      - 公会等级:[SuperGroupLevel]
+      - 人数:[SuperGroupHumanNum]
+      - 会长:[oderName]
+      - 编号:[GroupKeyId]
+    PageUpButtonDisPlay: 上一页
+    PageDownButtonDisPlay: 下一页
+    PlayerListViewTitle: 工会玩家列表
+    GroupMenuTitle: 公会主菜单
+    ContributionTitle: 捐献页面
