@@ -16,7 +16,7 @@ public class PlayerEntity {
     private String PlayerUUid;
     private int HaveContributionPoint;
     private int PostionType;
-    Date EnterTime;
+    private Date EnterTime;
 
     public Date getEnterTime() {
         return EnterTime;

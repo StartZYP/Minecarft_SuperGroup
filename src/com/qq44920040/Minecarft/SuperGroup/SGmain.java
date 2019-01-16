@@ -2,6 +2,7 @@ package com.qq44920040.Minecarft.SuperGroup;
 
 import com.qq44920040.Minecarft.SuperGroup.Commands.SGCommand;
 import com.qq44920040.Minecarft.SuperGroup.DUtil.DaoTool;
+import com.qq44920040.Minecarft.SuperGroup.DUtil.Eco;
 import com.qq44920040.Minecarft.SuperGroup.Listener.SuperGroupMainListener;
 import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupMenu;
 import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupView;
@@ -57,10 +58,10 @@ public class SGmain extends JavaPlugin {
                     }else if (args[0].equalsIgnoreCase("accept")){
                         UUID PlayerUUID = player.getUniqueId();
                         UUID ADDPlayerUUId = UUID.fromString(args[1]);
-                        int addPlayerGroupid = DaoTool.GetPlayerHaveGroup(ADDPlayerUUId);
-                        if (addPlayerGroupid!=-1){
+                        int PlayerGroupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
+                        if (DaoTool.GetPlayerHaveGroup(ADDPlayerUUId)!=-1){
                             player.sendMessage("§c§l此玩家已经有工会了");
-                        }else if(DaoTool.GetHumanNum(addPlayerGroupid)>=DaoTool.GetSuperGroup(addPlayerGroupid).getMaxHuManNumber()){
+                        }else if(DaoTool.GetHumanNum(PlayerGroupid)>=DaoTool.GetSuperGroup(PlayerGroupid).getMaxHuManNumber()){
                             player.sendMessage("§c§l公会满人了");
                         }else {
                             int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
@@ -102,6 +103,11 @@ public class SGmain extends JavaPlugin {
             System.out.println("======SuperGroupConfigIsOK======");
             new DaoTool(getDataFolder()+File.separator+"SuperGroup");
             Bukkit.getPluginManager().registerEvents(new SuperGroupMainListener(),this);
+            if (Eco.setupEconomy()){
+                System.out.println("[SuperGroup]Vault初始化成功");
+            }else {
+                System.out.println("[SuperGroup]Vault初始化失败");
+            }
         }else {
             System.out.println("======SuperGroupConfigIsErro======");
             System.out.println("======QQNumber:44920040======");
@@ -116,7 +122,8 @@ public class SGmain extends JavaPlugin {
             String Tempcontribution = getConfig().getString("SuperGroup.Level."+i+".contribution");
             String TempDay = getConfig().getString("SuperGroup.Level."+i+".Day");
             String Number = getConfig().getString("SuperGroup.Level."+i+".Number");
-            GroupConfig.GroupLevel.put(i,new String[]{Tempcontribution,TempDay,Number});
+            String LevelUpcontribution = getConfig().getString("SuperGroup.Level."+i+".LevelUpcontribution");
+            GroupConfig.GroupLevel.put(i,new String[]{Tempcontribution,TempDay,Number,LevelUpcontribution});
         }
         GroupConfig.Vice_President = getConfig().getInt("SuperGroup.Vice_President");
         System.out.println(GroupConfig.Vice_President);

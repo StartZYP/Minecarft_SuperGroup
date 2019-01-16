@@ -34,7 +34,7 @@ public class SuperGroupPlayerListView {
             itemMeta.setDisplayName("玩家名:"+PlayerName);
             int playerPostion = tempPlayerEntity.getPostionType();
             int ContributionPoint = tempPlayerEntity.getHaveContributionPoint();
-            itemMeta.setLore(Arrays.asList("玩家贡献点:"+ContributionPoint,"玩家职位:"+playerPostion));
+            itemMeta.setLore(Arrays.asList("玩家贡献点:"+ContributionPoint,"玩家职位:"+playerPostion,"玩家UUid:"+tempPlayerEntity.getPlayerUUid()));
             itemStack.setItemMeta(itemMeta);
             inv.setItem(i,itemStack);
             i++;

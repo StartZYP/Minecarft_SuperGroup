@@ -4,6 +4,8 @@ import com.qq44920040.Minecarft.SuperGroup.Entity.GroupEntity;
 import com.qq44920040.Minecarft.SuperGroup.Entity.PlayerEntity;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -25,6 +27,88 @@ public class DaoTool {
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
+        }
+    }
+
+    public static void GroupRemovePlayer(int SuperGroupId,UUID playeruuid,boolean IsDeleteAll){
+        if (IsDeleteAll){
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                String sql = "DELETE FROM SuperGroupPlayer where SuperGroupId="+SuperGroupId;
+                statement.executeUpdate(sql);
+                sql = "DELETE FROM SuperGroup where SuperGroupId="+SuperGroupId;
+                statement.executeUpdate(sql);
+                connection.commit();
+                statement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }else {
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                String sql = "DELETE FROM SuperGroupPlayer where PlayerUUid='"+ playeruuid+"'";
+                statement.executeUpdate(sql);
+                connection.commit();
+                statement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void UpdateUsedGroupContribution(int GroupId,int Contribution,boolean IsTake){
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql;
+            if (IsTake){
+                sql = "UPDATE SuperGroup set UsedGroupContributionPoist=UsedGroupContributionPoist-"+Contribution+" where SuperGroupId="+GroupId;
+            }else {
+                sql = "UPDATE SuperGroup set UsedGroupContributionPoist=UsedGroupContributionPoist+"+Contribution+" where SuperGroupId="+GroupId;
+            }
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void UpdateGroupContribution(int GroupId,int Contribution,boolean IsTake){
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql;
+            if (IsTake){
+                sql = "UPDATE SuperGroup set GroupContributionPoint=GroupContributionPoint-"+Contribution+" where SuperGroupId="+GroupId;
+            }else {
+                sql = "UPDATE SuperGroup set GroupContributionPoint=GroupContributionPoint+"+Contribution+" where SuperGroupId="+GroupId;
+            }
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void UpdatePlayerContribution(UUID playeruuid,int Contribution,boolean IsTake){
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql;
+            if (IsTake){
+                sql = "UPDATE SuperGroupPlayer set HaveContributionPoint=HaveContributionPoint-"+Contribution+",GroupJoinTime=datetime('now','localtime') where PlayerUUid='"+playeruuid+"'";
+            }else {
+                sql = "UPDATE SuperGroupPlayer set HaveContributionPoint=HaveContributionPoint+"+Contribution+",GroupJoinTime=datetime('now','localtime') where PlayerUUid='"+playeruuid+"'";
+            }
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
@@ -134,8 +218,14 @@ public class DaoTool {
             while (rs.next()){
                 int HaveContributionPoint = rs.getInt("HaveContributionPoint");
                 int PostionType = rs.getInt("PostionType");
-                Date EnterTime =rs.getDate("GroupJoinTime");
-                PlayerEntity = new PlayerEntity(HaveContributionPoint,PostionType,EnterTime);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date EnterDate = new Date();
+                try{
+                    EnterDate = sdf.parse(rs.getString("GroupJoinTime"));
+                }catch (ParseException e){
+                    e.printStackTrace();
+                }
+                PlayerEntity = new PlayerEntity(HaveContributionPoint,PostionType,EnterDate);
             }
             connection.commit();
             statement.close();

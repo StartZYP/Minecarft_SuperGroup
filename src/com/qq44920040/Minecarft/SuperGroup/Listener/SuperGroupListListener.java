@@ -28,7 +28,7 @@ class SuperGroupListListener{
                     String GroupKeyId = lore.replace(GroupConfig.SGlistItem[4].replace("[GroupKeyId]",""),"");
                     if (DaoTool.GetPlayerHaveGroup(p.getUniqueId())!=-1){
                         p.sendMessage("§c§l您已经有工会了.");
-                    }else if (DaoTool.GetGroupJoinLogHas(GroupKeyId,p.getUniqueId())){
+                    } else if (DaoTool.GetGroupJoinLogHas(GroupKeyId,p.getUniqueId())){
                         p.sendMessage("§c§l您已经申请过加入此公会了.");
                     }else{
                         lore = itemlist.get(0);

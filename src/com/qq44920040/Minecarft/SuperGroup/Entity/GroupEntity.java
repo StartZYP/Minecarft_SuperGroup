@@ -27,14 +27,20 @@ public class GroupEntity {
     }
 
     private void SetGroupVaule(){
-        int lastlevel=0;
+        int LastContribution=0;
+        int LevelMax = GroupConfig.GroupLevel.size();
         for(Map.Entry<Integer,String[]> TempLevel:GroupConfig.GroupLevel.entrySet()){
-            if (UsedGroupContributionPoist<Integer.parseInt(TempLevel.getValue()[0])){
+            if (UsedGroupContributionPoist>=LastContribution&&UsedGroupContributionPoist<Integer.parseInt(TempLevel.getValue()[0])){
                 GroupLevel = TempLevel.getKey()-1;
+                MaxHuManNumber = Integer.parseInt(TempLevel.getValue()[2]);
+                return;
+            }else {
+                LastContribution = Integer.parseInt(TempLevel.getValue()[0]);
             }
-            MaxHuManNumber = Integer.parseInt(TempLevel.getValue()[2]);
         }
-        GroupLevel = lastlevel;
+        GroupLevel = LevelMax;
+        MaxHuManNumber = Integer.parseInt(GroupConfig.GroupLevel.get(LevelMax)[2]);
+
     }
 
     public int getMaxHuManNumber() {
