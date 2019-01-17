@@ -8,8 +8,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+
 public class SuperGroupOperationPlayer {
-    public static void OperationPlayer(Player player){
+    public static void OperationPlayer(Player player,ItemStack PlayerItem){
         Inventory inv = Bukkit.createInventory(null,6*9, GroupConfig.PlayerOperationTitle);
         ItemStack Button_Block = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)4);
         ItemMeta itemMeta =Button_Block.getItemMeta();
@@ -32,9 +33,12 @@ public class SuperGroupOperationPlayer {
                 itemMeta.setDisplayName("转让会长");
                 Tag_Button.setItemMeta(itemMeta);
                 inv.setItem(i,Tag_Button);
-            }else {
+            }else if (i==13){
+                inv.setItem(i,PlayerItem);
+            } else {
                 inv.setItem(i,Button_Block);
             }
         }
+        player.openInventory(inv);
     }
 }

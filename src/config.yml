@@ -57,6 +57,11 @@ SuperGroup:
       - §42.[任何人]查看自己公会/SG SG
       - §43.[任何人]创建公会/SG create 公会名
     SuperGroupListTitle: §d公会列表
+    PlayerItem:
+      - 玩家名:[Player]
+      - 玩家贡献点:[Contribution]
+      - 玩家职位:[Postion]
+      - 玩家UUid:[UUID]
     SGlistItem:
       - 公会名:[SuperGroupName]
       - 公会等级:[SuperGroupLevel]

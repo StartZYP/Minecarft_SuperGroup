@@ -23,6 +23,7 @@ public class SuperGroupMenu {
         ItemStack Button_Block = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)4);
         itemMeta =Button_Block.getItemMeta();
         itemMeta.setDisplayName("§e§l工会菜单");
+        Button_Block.serialize()
         Button_Block.setItemMeta(itemMeta);
         for (int i=0;i<=53;i++){
             if (i<8||i>=45||i==9||i==18||i==27||i==36||i==17||i==26||i==35||i==44){

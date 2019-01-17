@@ -37,6 +37,7 @@ class SuperGroupListListener{
                         DaoTool.AddGroupJoinLog(Integer.parseInt(GroupKeyId),p.getUniqueId());
                     }
                 }
+
             } else if (ClickSlot==53||ClickSlot==45){
                 ItemStack Button = inv.getItem(ClickSlot);
                 if (Button!=null){

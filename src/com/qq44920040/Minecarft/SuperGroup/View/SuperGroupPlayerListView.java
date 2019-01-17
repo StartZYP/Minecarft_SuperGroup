@@ -21,7 +21,7 @@ public class SuperGroupPlayerListView {
         ItemMeta itemMeta =Button_Glass.getItemMeta();
         itemMeta.setDisplayName("§e§l工会成员列表");
         Button_Glass.setItemMeta(itemMeta);
-        for (int i=36;i<=44;i++){
+        for (int i=36;i<=53;i++){
             inv.setItem(i,Button_Glass);
         }
         int GroupId = DaoTool.GetPlayerHaveGroup(player.getUniqueId());
@@ -31,10 +31,10 @@ public class SuperGroupPlayerListView {
         itemMeta = itemStack.getItemMeta();
         for (PlayerEntity tempPlayerEntity: GroupPlayerList){
             String PlayerName = Bukkit.getOfflinePlayer(UUID.fromString(tempPlayerEntity.getPlayerUUid())).getName();
-            itemMeta.setDisplayName("玩家名:"+PlayerName);
+            itemMeta.setDisplayName(GroupConfig.PlayerListItem[0].replace("[Player]",PlayerName));
             int playerPostion = tempPlayerEntity.getPostionType();
             int ContributionPoint = tempPlayerEntity.getHaveContributionPoint();
-            itemMeta.setLore(Arrays.asList("玩家贡献点:"+ContributionPoint,"玩家职位:"+playerPostion,"玩家UUid:"+tempPlayerEntity.getPlayerUUid()));
+            itemMeta.setLore(Arrays.asList(GroupConfig.PlayerListItem[1].replace("[Contribution]",String.valueOf(ContributionPoint)),GroupConfig.PlayerListItem[2].replace("[Postion]",String.valueOf(playerPostion)),GroupConfig.PlayerListItem[3].replace("[UUID]",tempPlayerEntity.getPlayerUUid())));
             itemStack.setItemMeta(itemMeta);
             inv.setItem(i,itemStack);
             i++;

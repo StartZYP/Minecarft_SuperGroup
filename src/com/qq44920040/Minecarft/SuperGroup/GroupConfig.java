@@ -20,4 +20,5 @@ public class GroupConfig {
     public static String GroupMenuTitle;
     public static String ContributionTitle;
     public static String PlayerOperationTitle="§c§l操作玩家台";
+    public static String[] PlayerListItem;
 }

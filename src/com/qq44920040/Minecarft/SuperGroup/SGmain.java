@@ -141,7 +141,7 @@ public class SGmain extends JavaPlugin {
         GroupConfig.PlayerListViewTitle = getConfig().getString("SuperGroup.Lang.PlayerListViewTitle");
         GroupConfig.GroupMenuTitle = getConfig().getString("SuperGroup.Lang.GroupMenuTitle");
         GroupConfig.ContributionTitle = getConfig().getString("SuperGroup.Lang.ContributionTitle");
-
+        GroupConfig.PlayerListItem = getConfig().getStringList("SuperGroup.Lang.PlayerItem").toArray(new String[0]);
         if (GroupConfig.GroupLevel.size()>=1&&GroupConfig.Vice_President!=0&&GroupConfig.Elite!=0&&GroupConfig.EnterGroupTimeSetPosition!=0&&!GroupConfig.GroupCardLore.equalsIgnoreCase("")&&GroupConfig.Donation.length==3){
             return true;
         }else{
