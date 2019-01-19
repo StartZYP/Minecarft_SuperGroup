@@ -61,7 +61,7 @@ public class SGmain extends JavaPlugin {
                         int PlayerGroupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
                         if (DaoTool.GetPlayerHaveGroup(ADDPlayerUUId)!=-1){
                             player.sendMessage("§c§l此玩家已经有工会了");
-                        }else if(DaoTool.GetHumanNum(PlayerGroupid)>=DaoTool.GetSuperGroup(PlayerGroupid).getMaxHuManNumber()){
+                        }else if(DaoTool.GetHumanNum(PlayerGroupid,-1)>=DaoTool.GetSuperGroup(PlayerGroupid).getMaxHuManNumber()){
                             player.sendMessage("§c§l公会满人了");
                         }else {
                             int Groupid = DaoTool.GetPlayerHaveGroup(PlayerUUID);
@@ -125,11 +125,22 @@ public class SGmain extends JavaPlugin {
             String LevelUpcontribution = getConfig().getString("SuperGroup.Level."+i+".LevelUpcontribution");
             GroupConfig.GroupLevel.put(i,new String[]{Tempcontribution,TempDay,Number,LevelUpcontribution});
         }
-        GroupConfig.Vice_President = getConfig().getInt("SuperGroup.Vice_President");
+        int ShopItemNum = getConfig().getConfigurationSection("SuperGroup.GroupShop").getKeys(false).size();
+        for (int i =1;i<=ShopItemNum;i++){
+            String TempID = getConfig().getString("SuperGroup.GroupShop."+i+".ID");
+            String TempDisPlayName = getConfig().getString("SuperGroup.GroupShop."+i+".DisPlayName");
+            String Lore = getConfig().getString("SuperGroup.GroupShop."+i+".Lore");
+            String MustContribution = getConfig().getString("SuperGroup.GroupShop."+i+".MustContribution");
+            String DoCmd = getConfig().getString("SuperGroup.GroupShop."+i+".DoCmd");
+            System.out.println(DoCmd);
+            GroupConfig.ShopItem.put(i-1,new String[]{TempID,TempDisPlayName,Lore,MustContribution,DoCmd});
+        }
+        GroupConfig.PlayerOperationTitle = getConfig().getString("SuperGroup.PlayerOperationTitle");
+        GroupConfig.ShopTitle = getConfig().getString("SuperGroup.GroupShopTitle");
+        GroupConfig.Vice_President = getConfig().getInt("SuperGroup.VicePresidentNum");
         System.out.println(GroupConfig.Vice_President);
-        GroupConfig.Elite = getConfig().getInt("SuperGroup.Elite");
+        GroupConfig.Elite = getConfig().getInt("SuperGroup.EliteNum");
         System.out.println( GroupConfig.Elite);
-        GroupConfig.EnterGroupTimeSetPosition = getConfig().getInt("SuperGroup.EnterGroupTimeSetPosition");
         GroupConfig.GroupCardLore = getConfig().getString("SuperGroup.GroupCardLore");
         GroupConfig.Donation =getConfig().getString("SuperGroup.Donation").split("-");
         GroupConfig.SuperGroupInfo = getConfig().getStringList("SuperGroup.Lang.SuperGroupInfo").toArray(new String[0]);
@@ -142,7 +153,7 @@ public class SGmain extends JavaPlugin {
         GroupConfig.GroupMenuTitle = getConfig().getString("SuperGroup.Lang.GroupMenuTitle");
         GroupConfig.ContributionTitle = getConfig().getString("SuperGroup.Lang.ContributionTitle");
         GroupConfig.PlayerListItem = getConfig().getStringList("SuperGroup.Lang.PlayerItem").toArray(new String[0]);
-        if (GroupConfig.GroupLevel.size()>=1&&GroupConfig.Vice_President!=0&&GroupConfig.Elite!=0&&GroupConfig.EnterGroupTimeSetPosition!=0&&!GroupConfig.GroupCardLore.equalsIgnoreCase("")&&GroupConfig.Donation.length==3){
+        if (GroupConfig.GroupLevel.size()>=1&&GroupConfig.Vice_President!=0&&GroupConfig.Elite!=0&&!GroupConfig.GroupCardLore.equalsIgnoreCase("")&&GroupConfig.Donation.length==3){
             return true;
         }else{
             return false;

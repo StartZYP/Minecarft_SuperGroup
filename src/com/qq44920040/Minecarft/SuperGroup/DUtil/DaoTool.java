@@ -29,6 +29,41 @@ public class DaoTool {
             System.exit(0);
         }
     }
+    public static void UpdatePlayerContributionPoint(UUID playeruuid,int Contribution,boolean IsTake){
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql;
+            if (IsTake){
+                sql = "UPDATE SuperGroupPlayer set HaveContributionPoint=HaveContributionPoint-"+Contribution+"  where PlayerUUid='"+playeruuid+"'";
+            }else {
+                sql = "UPDATE SuperGroupPlayer set HaveContributionPoint=HaveContributionPoint+"+Contribution+" where PlayerUUid='"+playeruuid+"'";
+            }
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void UpdatePlayerPostion(UUID playeruuid,boolean IsUp){
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            String sql;
+            if (IsUp){
+                sql = "UPDATE SuperGroupPlayer set PostionType=PostionType+1 where PlayerUUid='"+playeruuid+"'";
+            }else {
+                sql = "UPDATE SuperGroupPlayer set PostionType=PostionType-1 where PlayerUUid='"+playeruuid+"'";
+            }
+            statement.executeUpdate(sql);
+            connection.commit();
+            statement.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     public static void GroupRemovePlayer(int SuperGroupId,UUID playeruuid,boolean IsDeleteAll){
         if (IsDeleteAll){
@@ -271,20 +306,36 @@ public class DaoTool {
         return haveGroup;
     }
 
-    public static int GetHumanNum(int SuperGroupId){
+    public static int GetHumanNum(int SuperGroupId,int TypePostion){
         int tempnum = 0;
-        try {
-            connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            String GetSuperGroupSql = "select * from SuperGroupPlayer where SuperGroupId="+SuperGroupId;
-            ResultSet rs = statement.executeQuery(GetSuperGroupSql);
-            while (rs.next()){
-                tempnum++;
+        if (TypePostion==-1){
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                String GetSuperGroupSql = "select * from SuperGroupPlayer where SuperGroupId="+SuperGroupId;
+                ResultSet rs = statement.executeQuery(GetSuperGroupSql);
+                while (rs.next()){
+                    tempnum++;
+                }
+                rs.close();
+                statement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
             }
-            rs.close();
-            statement.close();
-        }catch (SQLException e){
-            e.printStackTrace();
+        }else {
+            try {
+                connection.setAutoCommit(false);
+                statement = connection.createStatement();
+                String GetSuperGroupSql = "select * from SuperGroupPlayer where SuperGroupId="+SuperGroupId+" and PostionType="+TypePostion;
+                ResultSet rs = statement.executeQuery(GetSuperGroupSql);
+                while (rs.next()){
+                    tempnum++;
+                }
+                rs.close();
+                statement.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
         return tempnum;
     }

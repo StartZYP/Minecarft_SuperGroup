@@ -5,6 +5,7 @@ import com.qq44920040.Minecarft.SuperGroup.Entity.GroupEntity;
 import com.qq44920040.Minecarft.SuperGroup.GroupConfig;
 import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupContributionView;
 import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupPlayerListView;
+import com.qq44920040.Minecarft.SuperGroup.View.SuperGroupShopView;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,6 +29,7 @@ class SuperGroupMenuListener implements Listener {
                 SuperGroupContributionView.PlayerOpenContributionView(player);
                 //打开氪金
             }else if (Slot==16){
+                SuperGroupShopView.PlayerOpenShopView(player);
                 //打开商店
             }else if (Slot==40){
                 UUID playerUUid = player.getUniqueId();

@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 
 import java.util.Arrays;
 
@@ -23,7 +22,6 @@ public class SuperGroupMenu {
         ItemStack Button_Block = new ItemStack(Material.STAINED_GLASS_PANE,1,(short)4);
         itemMeta =Button_Block.getItemMeta();
         itemMeta.setDisplayName("§e§l工会菜单");
-        Button_Block.serialize()
         Button_Block.setItemMeta(itemMeta);
         for (int i=0;i<=53;i++){
             if (i<8||i>=45||i==9||i==18||i==27||i==36||i==17||i==26||i==35||i==44){
@@ -36,7 +34,7 @@ public class SuperGroupMenu {
         ItemStack SuperGroupItem = new ItemStack(Material.BEACON,1);
         itemMeta = SuperGroupItem.getItemMeta();
         itemMeta.setDisplayName(GroupConfig.SGlistItem[0].replace("[SuperGroupName]",Group.getGroupName()));
-        itemMeta.setLore(Arrays.asList(GroupConfig.SGlistItem[1].replace("[SuperGroupLevel]",String.valueOf(Group.GetGroupLevel())),GroupConfig.SGlistItem[2].replace("[SuperGroupHumanNum]",DaoTool.GetHumanNum(Group.getGroupID())+"/"+Group.getMaxHuManNumber()),GroupConfig.SGlistItem[3].replace("[oderName]",Bukkit.getOfflinePlayer(DaoTool.GetGroupOder(Group.getGroupID())).getName()),GroupConfig.SGlistItem[4].replace("[GroupKeyId]",String.valueOf(Group.getGroupID()))));
+        itemMeta.setLore(Arrays.asList(GroupConfig.SGlistItem[1].replace("[SuperGroupLevel]",String.valueOf(Group.GetGroupLevel())),GroupConfig.SGlistItem[2].replace("[SuperGroupHumanNum]",DaoTool.GetHumanNum(Group.getGroupID(),-1)+"/"+Group.getMaxHuManNumber()),GroupConfig.SGlistItem[3].replace("[oderName]",Bukkit.getOfflinePlayer(DaoTool.GetGroupOder(Group.getGroupID())).getName()),GroupConfig.SGlistItem[4].replace("[GroupKeyId]",String.valueOf(Group.getGroupID()))));
         SuperGroupItem.setItemMeta(itemMeta);
         inv.setItem(10,SuperGroupItem);
 

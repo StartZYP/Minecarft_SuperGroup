@@ -6,9 +6,10 @@ import java.util.Map;
 
 public class GroupConfig {
     public static Map<Integer,String[]> GroupLevel=new HashMap<>();
-    static int Vice_President;
-    static int Elite;
-    static int EnterGroupTimeSetPosition;
+    public static Map<Integer,String[]> ShopItem=new HashMap<>();
+    public static String ShopTitle;
+    public static int Vice_President;
+    public static int Elite;
     public static String GroupCardLore;
     public static String[] Donation;
     public static String[] SuperGroupInfo;
@@ -19,6 +20,6 @@ public class GroupConfig {
     public static String PlayerListViewTitle;
     public static String GroupMenuTitle;
     public static String ContributionTitle;
-    public static String PlayerOperationTitle="§c§l操作玩家台";
+    public static String PlayerOperationTitle;
     public static String[] PlayerListItem;
 }

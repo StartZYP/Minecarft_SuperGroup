@@ -45,11 +45,36 @@ SuperGroup:
       Day: 150
       Number: 25
       LevelUpcontribution: 999999999
-  Vice_President: 2
-  Elite: 3
-  EnterGroupTimeSetPosition: 2
+  VicePresidentNum: 2
+  EliteNum: 3
   GroupCardLore: CanCreateGroup
   Donation: 100000-50000-1000000
+  GroupShopTitle: '§c§l工会的商城'
+  GroupShop:
+    1:
+      ID: '95-1'
+      DisPlayName: '§d§l为是名字0'
+      Lore: '§c§l这个是爱迪生-§d§l我是第二行内容-价格:[MustContribution]'
+      MustContribution: 154400
+      DoCmd: give [Player] 64 1
+    2:
+      ID: '15'
+      DisPlayName: '§d§l为是名字1'
+      Lore: '§c§l这个是爱迪生-§d§l我是第二行内容-§d§l价格:[MustContribution]'
+      MustContribution: 150650
+      DoCmd: give [Player] 64 1
+    3:
+      ID: '35'
+      DisPlayName: '§d§l为是名字2'
+      Lore: '§c§l这个是爱迪生-§d§l我是第二行内容-§d§l价格:[MustContribution]'
+      MustContribution: 15050
+      DoCmd: give [Player] 64 1
+    4:
+      ID: '95-6'
+      DisPlayName: '§d§l为是名字5'
+      Lore: '§c§l这个是爱迪生-§d§l我是第二行内容-§d§l价格:[MustContribution]'
+      MustContribution: 15000
+      DoCmd: give [Player] 64 1
   Lang:
     SuperGroupInfo:
       - §4=======SuperGroup=======
@@ -73,3 +98,4 @@ SuperGroup:
     PlayerListViewTitle: 工会玩家列表
     GroupMenuTitle: 公会主菜单
     ContributionTitle: 捐献页面
+    PlayerOperationTitle: §c§l玩家操作台
