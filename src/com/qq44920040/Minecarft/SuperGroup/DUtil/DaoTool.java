@@ -53,9 +53,9 @@ public class DaoTool {
             statement = connection.createStatement();
             String sql;
             if (IsUp){
-                sql = "UPDATE SuperGroupPlayer set PostionType=PostionType+1 where PlayerUUid='"+playeruuid+"'";
-            }else {
                 sql = "UPDATE SuperGroupPlayer set PostionType=PostionType-1 where PlayerUUid='"+playeruuid+"'";
+            }else {
+                sql = "UPDATE SuperGroupPlayer set PostionType=PostionType+1 where PlayerUUid='"+playeruuid+"'";
             }
             statement.executeUpdate(sql);
             connection.commit();

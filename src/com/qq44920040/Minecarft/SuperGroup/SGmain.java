@@ -132,19 +132,15 @@ public class SGmain extends JavaPlugin {
             String Lore = getConfig().getString("SuperGroup.GroupShop."+i+".Lore");
             String MustContribution = getConfig().getString("SuperGroup.GroupShop."+i+".MustContribution");
             String DoCmd = getConfig().getString("SuperGroup.GroupShop."+i+".DoCmd");
-            System.out.println(DoCmd);
             GroupConfig.ShopItem.put(i-1,new String[]{TempID,TempDisPlayName,Lore,MustContribution,DoCmd});
         }
-        GroupConfig.PlayerOperationTitle = getConfig().getString("SuperGroup.PlayerOperationTitle");
-        GroupConfig.ShopTitle = getConfig().getString("SuperGroup.GroupShopTitle");
+        GroupConfig.PlayerOperationTitle = getConfig().getString("SuperGroup.Lang.PlayerOperationTitle");
+        GroupConfig.ShopTitle = getConfig().getString("SuperGroup.Lang.GroupShopTitle");
         GroupConfig.Vice_President = getConfig().getInt("SuperGroup.VicePresidentNum");
-        System.out.println(GroupConfig.Vice_President);
         GroupConfig.Elite = getConfig().getInt("SuperGroup.EliteNum");
-        System.out.println( GroupConfig.Elite);
         GroupConfig.GroupCardLore = getConfig().getString("SuperGroup.GroupCardLore");
         GroupConfig.Donation =getConfig().getString("SuperGroup.Donation").split("-");
         GroupConfig.SuperGroupInfo = getConfig().getStringList("SuperGroup.Lang.SuperGroupInfo").toArray(new String[0]);
-        System.out.println(Arrays.toString(GroupConfig.SuperGroupInfo));
         GroupConfig.SuperGroupListTitle = getConfig().getString("SuperGroup.Lang.SuperGroupListTitle");
         GroupConfig.SGlistItem = getConfig().getStringList("SuperGroup.Lang.SGlistItem").toArray(new String[0]);
         GroupConfig.PageUpButtonDisPlay = getConfig().getString("SuperGroup.Lang.PageUpButtonDisPlay");

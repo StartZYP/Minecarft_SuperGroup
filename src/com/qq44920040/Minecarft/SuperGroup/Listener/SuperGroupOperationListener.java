@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 import java.util.UUID;
 
-public class SuperGroupOperationListener {
-    public static void PlayerOperationEvent(InventoryClickEvent event){
+ class SuperGroupOperationListener {
+     static void PlayerOperationEvent(InventoryClickEvent event){
         Inventory inv = event.getInventory();
         if (inv.getTitle().equalsIgnoreCase(GroupConfig.PlayerOperationTitle)){
             event.setCancelled(true);
@@ -56,6 +56,7 @@ public class SuperGroupOperationListener {
                 }
             }else if (Slot==38){
                 DaoTool.GroupRemovePlayer(-1,UUID.fromString(PlayerItemUUid),false);
+                p.sendMessage("成功将他踢出工会");
             }else if (Slot==42){
                 if (PlayerItemPostion==2){
                     if (DaoTool.GetGroupOder(GroupId).toString().equalsIgnoreCase(operationplayer.getPlayerUUid())){
@@ -68,6 +69,7 @@ public class SuperGroupOperationListener {
                     p.sendMessage("这货必须先为副会长");
                 }
             }
+            p.closeInventory();
         }
     }
 }
